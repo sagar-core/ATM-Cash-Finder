@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Withdrawal Result | ATM Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .result-container {
+            max-width: 1000px;
+            margin: 120px auto 60px;
+            padding: 0 25px;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .result-header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .result-header p {
+            color: var(--muted);
+        }
+
+        .amount-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .amount-label {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .amount-value {
+            font-size: 42px;
+            font-weight: 800;
+        }
+
+        .success-box {
+            background: rgba(84, 229, 138, 0.08);
+            border: 1px solid rgba(84, 229, 138, 0.3);
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .success-box h2 {
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+
+        .best-combination {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+        }
+
+        .note-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .note-chip {
+            padding: 10px 15px;
+            border-radius: 10px;
+            background: rgba(116, 108, 255, 0.15);
+            border: 1px solid rgba(116, 108, 255, 0.3);
+            font-weight: 600;
+        }
+
+        .combinations-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .combination {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .combination:last-child {
+            border-bottom: none;
+        }
+
+        .combination-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .combination-equation {
+            color: var(--muted);
+            font-family: monospace;
+            font-size: 15px;
+        }
+
+        .math-explanation {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 18px;
+            background: rgba(116, 108, 255, 0.08);
+            border: 1px solid rgba(116, 108, 255, 0.2);
+        }
+
+        .math-explanation h3 {
+            margin-bottom: 12px;
+        }
+
+        .math-equation {
+            font-family: monospace;
+            font-size: 18px;
+            margin: 15px 0;
+            color: var(--primary-light);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .error-box {
+            background: rgba(255, 80, 80, 0.08);
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .error-box h2 {
+            margin-bottom: 10px;
+        }
+
+        .error-box p {
+            color: var(--muted);
+        }
+
+        @media (max-width: 600px) {
+            .result-header h1 {
+                font-size: 32px;
+            }
+
+            .amount-value {
+                font-size: 34px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include '_background.html' %}
+
+
+    <header class="navbar">
+        <div class="logo">
+            <span>ATM</span> Finder
+        </div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/withdraw">Withdraw</a>
+            <a href="/admin">Admin</a>
+            <a href="/history">History</a>
+        </nav>
+    </header>
+
+
+    <main class="result-container">
+
+        <div class="result-header">
+            <div class="badge">MATHEMATICAL SOLUTION</div>
+
+            <h1>Withdrawal Analysis</h1>
+
+            <p>
+                The Linear Diophantine Equation solver has analyzed the ATM inventory.
+            </p>
+        </div>
+
+
+        <div class="amount-card">
+
+            <div class="amount-label">
+                REQUESTED AMOUNT
+            </div>
+
+            <div class="amount-value">
+                ₹{{ amount }}
+            </div>
+
+        </div>
+
+
+        {% if best_combination %}
+
+        <div class="success-box">
+
+            <h2>✓ Valid Combination Found</h2>
+
+            <p>
+                The requested amount can be dispensed using the available ATM notes.
+            </p>
+
+
+            <div class="best-combination">
+
+                <strong>Minimum-note combination</strong>
+
+                <form action="/confirm-withdrawal" method="POST" style="margin-top: 25px;">
+
+                    <input type="hidden" name="amount" value="{{ amount }}">
+
+                    <button type="submit" class="btn btn-primary" style="border: none; cursor: pointer;">
+                        Confirm Withdrawal
+                    </button>
+
+                </form>
+
+                <div class="note-list">
+
+                    {% for denomination, quantity in best_combination.items() %}
+
+                    {% if quantity > 0 %}
+
+                    <div class="note-chip">
+                        ₹{{ denomination }} × {{ quantity }}
+                    </div>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+                <p style="margin-top: 18px; color: var(--muted);">
+                    Total notes:
+                    <strong>{{ best_combination.values()|sum }}</strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="combinations-card">
+
+            <h2>All Possible Combinations</h2>
+
+            <p style="color: var(--muted); margin-top: 8px;">
+                {{ combinations|length }} valid combination(s) were found.
+            </p>
+
+
+            {% for combination in combinations %}
+
+            <div class="combination">
+
+                <div class="combination-title">
+                    Combination {{ loop.index }}
+                </div>
+
+                <div class="combination-equation">
+
+                    {% for denomination, quantity in combination.items() %}
+
+                    {% if quantity > 0 %}
+
+                    ₹{{ denomination }} × {{ quantity }}
+
+                    {% if not loop.last %}
+                    +
+                    {% endif %}
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                    = ₹{{ amount }}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="math-explanation">
+
+            <h3>Linear Diophantine Equation</h3>
+
+            <p>
+                The ATM solves the withdrawal problem using integer variables
+                representing the number of notes of each denomination.
+            </p>
+
+            <div class="math-equation">
+                500x + 200y + 100z + 50w = {{ amount }}
+            </div>
+
+            <p style="color: var(--muted);">
+                Each variable must be a non-negative integer and cannot exceed
+                the number of notes available in the ATM.
+            </p>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="error-box">
+
+            <h2>✕ No Valid Combination</h2>
+
+            <p>
+                The ATM cannot dispense ₹{{ amount }} exactly with the
+                currently available denominations and inventory.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="actions">
+
+            <a href="/withdraw" class="btn btn-primary">
+                Try Another Amount
+            </a>
+
+            <a href="/" class="btn btn-secondary">
+                Back to Home
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

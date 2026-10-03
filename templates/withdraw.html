@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Withdraw Cash | ATM Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .withdraw-page {
+            min-height: calc(100vh - 125px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 7%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .withdraw-container {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .page-heading .badge {
+            margin-bottom: 15px;
+        }
+
+        .page-heading h1 {
+            font-size: clamp(36px, 5vw, 55px);
+            letter-spacing: -2px;
+            margin-bottom: 12px;
+        }
+
+        .page-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .withdraw-card {
+            display: grid;
+            grid-template-columns: 1fr 0.8fr;
+            gap: 20px;
+        }
+
+        .form-card,
+        .inventory-card {
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.045);
+            backdrop-filter: blur(20px);
+        }
+
+        .card-title {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .card-description {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .amount-label {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 9px;
+        }
+
+        .amount-wrapper {
+            position: relative;
+        }
+
+        .rupee {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-light);
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .amount-input {
+            width: 100%;
+            height: 65px;
+            padding: 0 20px 0 50px;
+
+            background: rgba(0, 0, 0, 0.18);
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            outline: none;
+
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+
+            transition: 0.25s ease;
+        }
+
+        .amount-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(116, 108, 255, 0.10);
+        }
+
+        .quick-label {
+            color: var(--muted);
+            font-size: 10px;
+            margin: 20px 0 10px;
+        }
+
+        .quick-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .quick-button {
+            padding: 9px 13px;
+
+            background: rgba(255, 255, 255, 0.04);
+
+            border: 1px solid var(--border);
+            border-radius: 8px;
+
+            color: var(--muted);
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            transition: 0.2s ease;
+        }
+
+        .quick-button:hover {
+            color: white;
+            border-color: var(--primary);
+            background: rgba(116, 108, 255, 0.10);
+        }
+
+        .find-button {
+            width: 100%;
+            height: 50px;
+
+            margin-top: 25px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+        .find-button:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .inventory-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .inventory-heading h2 {
+            font-size: 15px;
+        }
+
+        .inventory-status {
+            color: var(--success);
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        .inventory-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 14px;
+
+            margin-bottom: 8px;
+
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .inventory-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .inventory-icon {
+            width: 45px;
+            height: 28px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 5px;
+
+            background: rgba(116, 108, 255, 0.12);
+
+            color: var(--primary-light);
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .inventory-note span {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .inventory-count {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .mathematical-note {
+            margin-top: 18px;
+            padding: 14px;
+
+            border-left: 2px solid var(--primary);
+
+            background: rgba(116, 108, 255, 0.05);
+
+            border-radius: 0 8px 8px 0;
+
+            color: var(--muted);
+
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 750px) {
+
+            .withdraw-card {
+                grid-template-columns: 1fr;
+            }
+
+            .withdraw-page {
+                padding: 40px 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Shared animated background -->
+    {% include '_background.html' %}
+
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <a href="/" class="logo">
+            ATM<span>Finder</span>
+        </a>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/withdraw" class="active">Withdraw</a>
+            <a href="/admin">Admin</a>
+            <a href="/history">History</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Withdrawal Page -->
+    <main class="withdraw-page">
+
+        <div class="withdraw-container">
+
+            <div class="page-heading">
+
+                <div class="badge">
+                    <span class="status-dot"></span>
+                    SECURE WITHDRAWAL
+                </div>
+
+                <h1>
+                    Withdraw <span>Cash</span>
+                </h1>
+
+                <p>
+                    Enter the amount and our mathematical engine
+                    will find a suitable note combination.
+                </p>
+
+            </div>
+
+
+            <div class="withdraw-card">
+
+                <!-- Form -->
+                <div class="form-card">
+
+                    <h2 class="card-title">
+                        Enter Withdrawal Amount
+                    </h2>
+
+                    <p class="card-description">
+                        The system will check the ATM inventory and
+                        find valid combinations using the available
+                        denominations.
+                    </p>
+
+
+                    <form action="/withdraw" method="POST">
+
+                        <label class="amount-label" for="amount">
+                            Amount
+                        </label>
+
+                        <div class="amount-wrapper">
+
+                            <span class="rupee">₹</span>
+
+                            <input type="number" id="amount" name="amount" class="amount-input" placeholder="0" min="50"
+                                step="50" required>
+
+                        </div>
+
+
+                        <p class="quick-label">
+                            QUICK AMOUNT
+                        </p>
+
+
+                        <div class="quick-buttons">
+
+                            <button type="button" class="quick-button" onclick="setAmount(500)">
+                                ₹500
+                            </button>
+
+                            <button type="button" class="quick-button" onclick="setAmount(1000)">
+                                ₹1,000
+                            </button>
+
+                            <button type="button" class="quick-button" onclick="setAmount(2000)">
+                                ₹2,000
+                            </button>
+
+                            <button type="button" class="quick-button" onclick="setAmount(5000)">
+                                ₹5,000
+                            </button>
+
+                        </div>
+
+
+                        <button type="submit" class="find-button">
+
+                            Find Cash Combination →
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+
+                <!-- Inventory -->
+                <div class="inventory-card">
+
+                    <div class="inventory-heading">
+
+                        <h2>
+                            ATM Inventory
+                        </h2>
+
+                        <span class="inventory-status">
+                            ● AVAILABLE
+                        </span>
+
+                    </div>
+
+
+                    <div class="inventory-item">
+
+                        <div class="inventory-note">
+
+                            <div class="inventory-icon">
+                                ₹500
+                            </div>
+
+                            <span>
+                                ₹500 notes
+                            </span>
+
+                        </div>
+
+                        <span class="inventory-count">
+                            3
+                        </span>
+
+                    </div>
+
+
+                    <div class="inventory-item">
+
+                        <div class="inventory-note">
+
+                            <div class="inventory-icon">
+                                ₹200
+                            </div>
+
+                            <span>
+                                ₹200 notes
+                            </span>
+
+                        </div>
+
+                        <span class="inventory-count">
+                            4
+                        </span>
+
+                    </div>
+
+
+                    <div class="inventory-item">
+
+                        <div class="inventory-note">
+
+                            <div class="inventory-icon">
+                                ₹100
+                            </div>
+
+                            <span>
+                                ₹100 notes
+                            </span>
+
+                        </div>
+
+                        <span class="inventory-count">
+                            5
+                        </span>
+
+                    </div>
+
+
+                    <div class="inventory-item">
+
+                        <div class="inventory-note">
+
+                            <div class="inventory-icon">
+                                ₹50
+                            </div>
+
+                            <span>
+                                ₹50 notes
+                            </span>
+
+                        </div>
+
+                        <span class="inventory-count">
+                            10
+                        </span>
+
+                    </div>
+
+
+                    <div class="mathematical-note">
+
+                        <strong>
+                            Mathematical Model
+                        </strong>
+
+                        <br>
+
+                        The system solves a bounded
+                        Linear Diophantine Equation:
+
+                        <br><br>
+
+                        500x + 200y + 100z + 50w = Amount
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        function setAmount(amount) {
+
+            document.getElementById("amount").value = amount;
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction History | ATM Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .history-container {
+            max-width: 1100px;
+            margin: 120px auto 60px;
+            padding: 0 25px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: var(--muted);
+        }
+
+        .history-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            overflow-x: auto;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-table th {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .amount {
+            font-weight: 800;
+        }
+
+        .notes {
+            color: var(--muted);
+            font-family: monospace;
+        }
+
+        .delete-button {
+            padding: 8px 13px;
+
+            border: 1px solid rgba(255, 80, 80, 0.3);
+            border-radius: 8px;
+
+            background: rgba(255, 80, 80, 0.08);
+            color: #ff8585;
+
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .delete-button:hover {
+            background: rgba(255, 80, 80, 0.15);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            color: var(--muted);
+        }
+
+        .flash-message {
+            margin-bottom: 20px;
+            padding: 13px 16px;
+
+            border-radius: 10px;
+
+            background: rgba(84, 229, 138, 0.08);
+            border: 1px solid rgba(84, 229, 138, 0.25);
+
+            color: var(--success);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .action-button {
+            padding: 12px 18px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+            font-weight: 600;
+
+            background: var(--primary);
+            color: white;
+        }
+
+        .secondary-button {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    {% include '_background.html' %}
+
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span>ATM</span> Finder
+        </div>
+
+        <nav>
+
+            <a href="/">Home</a>
+
+            <a href="/withdraw">
+                Withdraw
+            </a>
+
+            <a href="/admin">
+                Admin
+            </a>
+
+            <a href="/history">
+                History
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="history-container">
+
+
+        <div class="page-header">
+
+            <div class="badge">
+                ADMIN HISTORY
+            </div>
+
+            <h1>Transaction History</h1>
+
+            <p>
+                Review completed ATM withdrawal transactions.
+            </p>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+        {% for message in messages %}
+
+        <div class="flash-message">
+            ✓ {{ message }}
+        </div>
+
+        {% endfor %}
+
+        {% endif %}
+
+        {% endwith %}
+
+
+        <div class="history-card">
+
+            {% if transactions %}
+
+            <table class="history-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Amount</th>
+
+                        <th>Notes Dispensed</th>
+
+                        <th>Total Notes</th>
+
+                        <th>Date & Time</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for transaction in transactions %}
+
+                    <tr>
+
+                        <td>
+                            #{{ transaction["id"] }}
+                        </td>
+
+                        <td class="amount">
+                            ₹{{ transaction["amount"] }}
+                        </td>
+
+                        <td class="notes">
+                            {{ transaction["notes"] }}
+                        </td>
+
+                        <td>
+                            {{ transaction["total_notes"] }}
+                        </td>
+
+                        <td>
+                            {{ transaction["created_at"] }}
+                        </td>
+
+                        <td>
+
+                            <form method="POST" action="/admin/history/delete/{{ transaction['id'] }}"
+                                onsubmit="return confirm('Delete this transaction record?');">
+
+                                <button type="submit" class="delete-button">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <h2>No Transactions Yet</h2>
+
+                <p>
+                    Completed withdrawals will appear here.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="actions">
+
+            <a href="/admin" class="action-button">
+                ← Dashboard
+            </a>
+
+            <a href="/admin/inventory" class="action-button secondary-button">
+                Manage Inventory
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

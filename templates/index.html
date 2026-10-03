@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATM Cash Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    {% include '_background.html' %}
+
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <a href="/" class="logo">
+            ATM<span>Finder</span>
+        </a>
+
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/withdraw">Withdraw</a>
+            <a href="/admin">Admin</a>
+            <a href="/history">History</a>
+        </nav>
+
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="hero">
+
+        <!-- Left Section -->
+        <section class="hero-content">
+
+            <div class="badge">
+                <span class="status-dot"></span>
+                ATM SYSTEM ONLINE
+            </div>
+
+            <h1>
+                Smart Cash
+                <br>
+                <span>Combination Finder</span>
+            </h1>
+
+            <p class="hero-description">
+                Find the most suitable combination of currency notes
+                for your withdrawal using mathematical optimization
+                and Linear Diophantine Equations.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="/withdraw" class="btn btn-primary">
+                    <span>Start Withdrawal</span>
+                    <span class="arrow">→</span>
+                </a>
+
+                <a href="/admin" class="btn btn-secondary">
+                    Manage ATM
+                </a>
+
+            </div>
+
+            <div class="features">
+
+                <div class="feature">
+                    <div class="feature-icon">₹</div>
+
+                    <div>
+                        <strong>Smart Dispensing</strong>
+                        <p>Optimized note combinations</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <div class="feature-icon">✓</div>
+
+                    <div>
+                        <strong>Inventory Aware</strong>
+                        <p>Checks available notes</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Right Section -->
+        <section class="atm-section">
+
+            <div class="atm-card">
+
+                <div class="card-top">
+
+                    <div>
+                        <p class="small-label">ATM CASH</p>
+                        <h2>Available Balance</h2>
+                    </div>
+
+                    <div class="online">
+                        <span></span>
+                        ONLINE
+                    </div>
+
+                </div>
+
+                <div class="balance">
+                    ₹{{ "{:,}".format(
+                    (500 * inventory.get(500, 0)) +
+                    (200 * inventory.get(200, 0)) +
+                    (100 * inventory.get(100, 0)) +
+                    (50 * inventory.get(50, 0))
+                    ) }}
+                </div>
+
+                <p class="balance-label">
+                    Total cash available in ATM
+                </p>
+
+                <div class="divider"></div>
+
+                <div class="notes-title">
+                    <span>Currency Inventory</span>
+                    <span>Available</span>
+                </div>
+
+                <div class="note-list">
+
+                    <div class="note-row">
+
+                        <div class="note-info">
+                            <div class="note-symbol">₹500</div>
+
+                            <div>
+                                <strong>₹500 Note</strong>
+                                <span>High denomination</span>
+                            </div>
+                        </div>
+
+                        <strong>{{ inventory.get(500, 0) }}</strong>
+
+                    </div>
+
+
+                    <div class="note-row">
+
+                        <div class="note-info">
+                            <div class="note-symbol">₹200</div>
+
+                            <div>
+                                <strong>₹200 Note</strong>
+                                <span>Medium denomination</span>
+                            </div>
+                        </div>
+
+                        <strong>{{ inventory.get(200, 0) }}</strong>
+
+                    </div>
+
+
+                    <div class="note-row">
+
+                        <div class="note-info">
+                            <div class="note-symbol">₹100</div>
+
+                            <div>
+                                <strong>₹100 Note</strong>
+                                <span>Standard denomination</span>
+                            </div>
+                        </div>
+
+                        <strong>{{ inventory.get(100, 0) }}</strong>
+
+                    </div>
+
+
+                    <div class="note-row">
+
+                        <div class="note-info">
+                            <div class="note-symbol">₹50</div>
+
+                            <div>
+                                <strong>₹50 Note</strong>
+                                <span>Low denomination</span>
+                            </div>
+                        </div>
+
+                        <strong>{{ inventory.get(50, 0) }}</strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <a href="/withdraw" class="card-button">
+                    Withdraw Cash
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <!-- Floating mathematical card -->
+
+            <div class="math-card">
+
+                <div class="math-icon">∑</div>
+
+                <div>
+                    <span>Mathematical Engine</span>
+                    <strong>Diophantine Solver</strong>
+                </div>
+
+                <div class="math-check">
+                    ✓
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div>
+            ATM Cash Dispensing Optimization
+        </div>
+
+        <div>
+
+            <span class="footer-dot">•</span>
+            Linear Diophantine Equations
+        </div>
+
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

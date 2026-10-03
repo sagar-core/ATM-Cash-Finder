@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | ATM Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .login-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 430px;
+            padding: 35px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background: rgba(116, 108, 255, 0.12);
+            border: 1px solid rgba(116, 108, 255, 0.3);
+
+            font-size: 28px;
+        }
+
+        .login-header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: var(--muted);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 13px 15px;
+
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            color: var(--text);
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: var(--primary);
+            color: white;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            margin-bottom: 20px;
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: rgba(255, 80, 80, 0.08);
+            border: 1px solid rgba(255, 80, 80, 0.25);
+
+            color: #ff8585;
+            text-align: center;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .login-footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include '_background.html' %}
+
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span>ATM</span> Finder
+        </div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/withdraw">Withdraw</a>
+            <a href="/admin">Admin</a>
+            <a href="/history">History</a>
+        </nav>
+
+    </header>
+
+
+    <main class="login-container">
+
+        <div class="login-card">
+
+            <div class="login-header">
+
+                <div class="login-icon">
+                    🔐
+                </div>
+
+                <h1>Admin Login</h1>
+
+                <p>
+                    Sign in to manage the ATM system.
+                </p>
+
+            </div>
+
+
+            {% with messages = get_flashed_messages() %}
+
+            {% if messages %}
+
+            {% for message in messages %}
+
+            <div class="error-message">
+                {{ message }}
+            </div>
+
+            {% endfor %}
+
+            {% endif %}
+
+            {% endwith %}
+
+
+            <form method="POST" action="/admin/login">
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input type="text" id="username" name="username" placeholder="Enter username" required
+                        autocomplete="username">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input type="password" id="password" name="password" placeholder="Enter password" required
+                        autocomplete="current-password">
+
+                </div>
+
+
+                <button type="submit" class="login-button">
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <div class="login-footer">
+
+                <a href="/">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

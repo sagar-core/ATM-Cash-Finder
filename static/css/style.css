@@ -1,0 +1,1408 @@
+/* =========================================================
+   ATM CASH FINDER
+   Desktop Light Theme — Cotton / Cherry Red / Maroon / Noir Black
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+    --background: #EDEBDD;
+    --background-light: #F4F2E7;
+
+    --card: rgba(255, 255, 255, 0.72);
+    --card-hover: rgba(255, 255, 255, 0.92);
+
+    --border: rgba(24, 23, 23, 0.12);
+
+    --text: #181717;
+    --muted: #625D59;
+
+    --primary: #810100;
+    --primary-light: #830000;
+
+    --success: #830000;
+
+    --shadow: rgba(24, 23, 23, 0.12);
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(circle at 75% 35%,
+            rgba(129, 1, 0, 0.07),
+            transparent 35%),
+        var(--background);
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   BACKGROUND
+   ========================================================= */
+
+.background {
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 0;
+}
+
+
+.glow {
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(110px);
+
+    opacity: 0.15;
+
+    animation: glowMove 10s ease-in-out infinite alternate;
+}
+
+
+.glow-one {
+    width: 450px;
+    height: 450px;
+
+    background: #810100;
+
+    top: -180px;
+    left: -160px;
+}
+
+
+.glow-two {
+    width: 400px;
+    height: 400px;
+
+    background: #830000;
+
+    right: -180px;
+    bottom: -160px;
+
+    animation-delay: 2s;
+}
+
+
+.grid {
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+        linear-gradient(rgba(24, 23, 23, 0.025) 1px,
+            transparent 1px),
+        linear-gradient(90deg,
+            rgba(24, 23, 23, 0.025) 1px,
+            transparent 1px);
+
+    background-size: 50px 50px;
+
+    mask-image:
+        linear-gradient(to bottom,
+            black,
+            transparent 85%);
+}
+
+
+@keyframes glowMove {
+
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(40px, 30px) scale(1.15);
+    }
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+    height: 78px;
+
+    padding: 0 7%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    position: relative;
+
+    z-index: 10;
+
+    border-bottom: 1px solid var(--border);
+
+    backdrop-filter: blur(15px);
+}
+
+
+.logo {
+    color: var(--text);
+
+    text-decoration: none;
+
+    font-size: 21px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+}
+
+
+.logo span {
+    color: var(--primary-light);
+}
+
+
+nav {
+    display: flex;
+
+    align-items: center;
+
+    gap: 32px;
+}
+
+
+nav a {
+    position: relative;
+
+    color: var(--muted);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: color 0.25s ease;
+}
+
+
+nav a:hover,
+nav a.active {
+    color: var(--text);
+}
+
+
+nav a.active::after {
+    content: "";
+
+    position: absolute;
+
+    height: 2px;
+
+    width: 18px;
+
+    left: 50%;
+
+    bottom: -9px;
+
+    transform: translateX(-50%);
+
+    border-radius: 10px;
+
+    background: var(--primary-light);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    min-height: calc(100vh - 125px);
+
+    max-width: 1400px;
+
+    margin: auto;
+
+    padding: 75px 7% 60px;
+
+    display: grid;
+
+    grid-template-columns: 1.1fr 0.9fr;
+
+    align-items: center;
+
+    gap: 80px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.hero-content {
+    max-width: 680px;
+}
+
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 8px 13px;
+
+    border-radius: 50px;
+
+    border: 1px solid rgba(129, 1, 0, 0.15);
+
+    background: rgba(129, 1, 0, 0.06);
+
+    color: #810100;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    margin-bottom: 25px;
+}
+
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+
+    box-shadow: 0 0 12px var(--success);
+
+    animation: pulse 2s infinite;
+}
+
+
+@keyframes pulse {
+
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+h1 {
+    font-size: clamp(48px, 5.5vw, 78px);
+
+    line-height: 1.03;
+
+    letter-spacing: -3px;
+
+    margin-bottom: 28px;
+}
+
+
+h1 span {
+    background:
+        linear-gradient(110deg,
+            #810100,
+            #830000);
+
+    -webkit-background-clip: text;
+
+    background-clip: text;
+
+    color: transparent;
+}
+
+
+.hero-description {
+    max-width: 600px;
+
+    color: var(--muted);
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.hero-buttons {
+    display: flex;
+
+    gap: 14px;
+
+    align-items: center;
+}
+
+
+.btn {
+    min-height: 50px;
+
+    padding: 0 20px;
+
+    border-radius: 10px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.btn-primary {
+    color: white;
+
+    background: var(--primary);
+
+    box-shadow:
+        0 12px 30px rgba(129, 1, 0, 0.18);
+}
+
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+
+    background: var(--primary-light);
+}
+
+
+.arrow {
+    font-size: 18px;
+
+    transition: transform 0.25s ease;
+}
+
+
+.btn-primary:hover .arrow {
+    transform: translateX(4px);
+}
+
+
+.btn-secondary {
+    color: var(--text);
+
+    border: 1px solid var(--border);
+
+    background: rgba(24, 23, 23, 0.025);
+}
+
+
+.btn-secondary:hover {
+    transform: translateY(-3px);
+
+    background: var(--card-hover);
+
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+
+/* =========================================================
+   FEATURES
+   ========================================================= */
+
+.features {
+    display: flex;
+
+    gap: 35px;
+
+    margin-top: 50px;
+}
+
+
+.feature {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.feature-icon {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(129, 1, 0, 0.08);
+
+    border: 1px solid rgba(129, 1, 0, 0.12);
+
+    color: var(--primary-light);
+
+    font-weight: bold;
+}
+
+
+.feature strong {
+    display: block;
+
+    font-size: 13px;
+
+    margin-bottom: 4px;
+}
+
+
+.feature p {
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   ATM SECTION
+   ========================================================= */
+
+.atm-section {
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   ATM CARD
+   ========================================================= */
+
+.atm-card {
+    width: 100%;
+
+    max-width: 410px;
+
+    padding: 30px;
+
+    border-radius: 22px;
+
+    border: 1px solid var(--border);
+
+    background:
+        linear-gradient(145deg,
+            rgba(255, 255, 255, 0.92),
+            rgba(24, 23, 23, 0.025));
+
+    backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 35px 80px var(--shadow);
+
+    animation: floating 5s ease-in-out infinite;
+}
+
+
+@keyframes floating {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-9px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+.card-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+}
+
+
+.small-label {
+    color: var(--primary-light);
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+
+.card-top h2 {
+    font-size: 15px;
+
+    font-weight: 500;
+}
+
+
+.online {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: #810100;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+.online span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #830000;
+
+    box-shadow: 0 0 10px #830000;
+}
+
+
+.balance {
+    font-size: 43px;
+
+    font-weight: 800;
+
+    letter-spacing: -2px;
+
+    margin-top: 28px;
+}
+
+
+.balance-label {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    margin-top: 5px;
+}
+
+
+.divider {
+    height: 1px;
+
+    background: var(--border);
+
+    margin: 25px 0;
+}
+
+
+.notes-title {
+    display: flex;
+
+    justify-content: space-between;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+}
+
+
+.note-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.note-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 11px;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.note-row:hover {
+    background: rgba(255, 255, 255, 0.88);
+
+    transform: translateX(3px);
+}
+
+
+.note-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.note-symbol {
+    width: 48px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 5px;
+
+    background: rgba(129, 1, 0, 0.10);
+
+    color: var(--primary-light);
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+.note-info strong {
+    display: block;
+
+    font-size: 11px;
+}
+
+
+.note-info span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    margin-top: 2px;
+}
+
+
+.note-row>strong {
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   CARD BUTTON
+   ========================================================= */
+
+.card-button {
+    margin-top: 20px;
+
+    height: 46px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 17px;
+
+    border-radius: 9px;
+
+    background: rgba(129, 1, 0, 0.10);
+
+    border: 1px solid rgba(129, 1, 0, 0.13);
+
+    color: var(--primary-light);
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition: 0.25s ease;
+}
+
+
+.card-button:hover {
+    background: var(--primary);
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   FLOATING MATH CARD
+   ========================================================= */
+
+.math-card {
+    position: absolute;
+
+    right: -35px;
+
+    bottom: -35px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px 15px;
+
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.94);
+
+    backdrop-filter: blur(15px);
+
+    box-shadow: 0 20px 40px var(--shadow);
+
+    animation: floatingSmall 4s ease-in-out infinite;
+}
+
+
+@keyframes floatingSmall {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+.math-icon {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: rgba(129, 1, 0, 0.12);
+
+    color: var(--primary-light);
+
+    font-weight: bold;
+}
+
+
+.math-card span {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 8px;
+
+    margin-bottom: 3px;
+}
+
+
+.math-card strong {
+    display: block;
+
+    font-size: 10px;
+}
+
+
+.math-check {
+    color: var(--success);
+
+    font-size: 13px;
+
+    margin-left: 5px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    position: relative;
+
+    z-index: 5;
+
+    min-height: 47px;
+
+    padding: 0 7% 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+.footer-dot {
+    margin: 0 8px;
+
+    color: var(--primary-light);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+
+/* =========================================================
+   SHARED ANIMATED VIDEO BACKGROUND
+   Used on every page through templates/_background.html
+   ========================================================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    background: var(--background);
+}
+
+.background-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transform: scale(1.06);
+    transform-origin: center center;
+    opacity: 0.85;
+    filter: saturate(1) contrast(1.05) brightness(0.9);
+    z-index: 0;
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+
+    background:
+        linear-gradient(90deg,
+            rgba(237, 235, 221, 0.15) 0%,
+            rgba(237, 235, 221, 0.08) 38%,
+            rgba(237, 235, 221, 0.04) 68%,
+            rgba(237, 235, 221, 0.10) 100%),
+        linear-gradient(180deg,
+            rgba(237, 235, 221, 0.05) 0%,
+            rgba(237, 235, 221, 0.12) 100%);
+}
+
+.background .glow,
+.background .grid {
+    z-index: 2;
+}
+
+/* Keep all page content above the fixed background. */
+.navbar,
+.hero,
+.withdraw-page,
+.admin-container,
+.login-container,
+.success-container,
+.result-container,
+.history-container,
+.inventory-container,
+main,
+footer {
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================================
+   MOBILE + TABLET RESPONSIVE DESIGN
+   ATM CASH FINDER
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   TABLET
+   651px – 1024px
+   --------------------------------------------------------- */
+
+@media (min-width: 651px) and (max-width: 1024px) {
+
+    /* Background video */
+    .background-video {
+        opacity: 0.78;
+        transform: scale(1.08);
+        object-position: center center;
+        filter: saturate(1) contrast(1.05) brightness(0.88);
+    }
+
+    .video-overlay {
+        background:
+            linear-gradient(90deg,
+                rgba(237, 235, 221, 0.18) 0%,
+                rgba(237, 235, 221, 0.08) 50%,
+                rgba(237, 235, 221, 0.14) 100%),
+            linear-gradient(180deg,
+                rgba(237, 235, 221, 0.06) 0%,
+                rgba(237, 235, 221, 0.14) 100%);
+    }
+
+
+    /* Navbar */
+    .navbar {
+        height: 70px;
+        padding: 0 5%;
+    }
+
+    nav {
+        gap: 20px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+
+    /* Hero */
+    .hero {
+        min-height: auto;
+        padding: 55px 5% 50px;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: clamp(42px, 6vw, 60px);
+        letter-spacing: -2px;
+    }
+
+    .hero-description {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+
+    /* Features */
+    .features {
+        gap: 20px;
+        margin-top: 35px;
+    }
+
+    .feature {
+        gap: 8px;
+    }
+
+    .feature-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+
+    /* ATM card */
+    .atm-card {
+        max-width: 360px;
+        padding: 25px;
+    }
+
+    .balance {
+        font-size: 38px;
+    }
+
+    .math-card {
+        right: -15px;
+        bottom: -25px;
+    }
+
+
+    /* Buttons */
+    .hero-buttons {
+        flex-wrap: wrap;
+    }
+
+
+    /* Footer */
+    footer {
+        padding: 0 5% 20px;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+   0px – 650px
+   --------------------------------------------------------- */
+
+@media (max-width: 650px) {
+
+    /* =========================
+       BACKGROUND VIDEO
+       ========================= */
+
+    .background-video {
+        opacity: 0.70;
+        transform: scale(1.16);
+        object-position: center center;
+        filter: saturate(1) contrast(1.05) brightness(0.88);
+    }
+
+    .video-overlay {
+        background:
+            linear-gradient(90deg,
+                rgba(237, 235, 221, 0.16) 0%,
+                rgba(237, 235, 221, 0.08) 50%,
+                rgba(237, 235, 221, 0.14) 100%),
+            linear-gradient(180deg,
+                rgba(237, 235, 221, 0.06) 0%,
+                rgba(237, 235, 221, 0.16) 100%);
+    }
+
+
+    /* =========================
+       NAVBAR
+       ========================= */
+
+    .navbar {
+        height: auto;
+        min-height: 65px;
+        padding: 15px 6%;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        font-size: 12px;
+    }
+
+
+    /* =========================
+       HERO
+       ========================= */
+
+    .hero {
+        min-height: auto;
+        padding: 45px 6% 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 45px;
+        text-align: center;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+
+    /* Badge */
+    .badge {
+        font-size: 9px;
+        padding: 7px 11px;
+        margin-bottom: 20px;
+    }
+
+
+    /* Heading */
+    h1 {
+        font-size: clamp(40px, 12vw, 56px);
+        line-height: 1.05;
+        letter-spacing: -2px;
+        margin-bottom: 22px;
+    }
+
+
+    /* Description */
+    .hero-description {
+        font-size: 14px;
+        line-height: 1.7;
+        margin: 0 auto 28px;
+        max-width: 500px;
+    }
+
+
+    /* =========================
+       BUTTONS
+       ========================= */
+
+    .hero-buttons {
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 320px;
+        min-height: 48px;
+    }
+
+
+    /* =========================
+       FEATURES
+       ========================= */
+
+    .features {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 35px;
+        text-align: left;
+        max-width: 320px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .feature {
+        gap: 12px;
+    }
+
+    .feature-icon {
+        flex-shrink: 0;
+        width: 38px;
+        height: 38px;
+    }
+
+
+    /* =========================
+       ATM SECTION
+       ========================= */
+
+    .atm-section {
+        width: 100%;
+        padding: 0 3%;
+    }
+
+
+    /* =========================
+       ATM CARD
+       ========================= */
+
+    .atm-card {
+        width: 100%;
+        max-width: 390px;
+        padding: 24px;
+        border-radius: 18px;
+    }
+
+    .balance {
+        font-size: 36px;
+    }
+
+
+    /* =========================
+       NOTE ROWS
+       ========================= */
+
+    .note-row {
+        padding: 10px;
+    }
+
+    .note-symbol {
+        width: 44px;
+        height: 28px;
+    }
+
+
+    /* =========================
+       FLOATING MATH CARD
+       ========================= */
+
+    .math-card {
+        right: -5px;
+        bottom: -25px;
+        padding: 10px 12px;
+        transform: scale(0.9);
+    }
+
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    footer {
+        min-height: auto;
+        padding: 20px 6% 25px;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   SMALL PHONES
+   0px – 400px
+   --------------------------------------------------------- */
+
+@media (max-width: 400px) {
+
+    .background-video {
+        opacity: 0.65;
+        transform: scale(1.22);
+    }
+
+
+    .navbar {
+        padding: 13px 5%;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+
+    nav {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 11px;
+    }
+
+
+    .hero {
+        padding: 35px 5% 40px;
+        gap: 38px;
+    }
+
+
+    h1 {
+        font-size: 38px;
+        letter-spacing: -1.5px;
+    }
+
+
+    .hero-description {
+        font-size: 13px;
+    }
+
+
+    .atm-card {
+        padding: 20px;
+    }
+
+    .balance {
+        font-size: 32px;
+    }
+
+
+    .math-card {
+        display: none;
+    }
+
+
+    .features {
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Transaction Successful | ATM Finder</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .success-container {
+            max-width: 700px;
+            margin: 150px auto 60px;
+            padding: 0 25px;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(84, 229, 138, 0.12);
+            border: 1px solid rgba(84, 229, 138, 0.35);
+
+            color: var(--success);
+            font-size: 38px;
+        }
+
+        .success-container h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .success-container>p {
+            color: var(--muted);
+        }
+
+        .receipt {
+            margin-top: 35px;
+            padding: 30px;
+
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            text-align: left;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .receipt-row:last-child {
+            border-bottom: none;
+        }
+
+        .receipt-label {
+            color: var(--muted);
+        }
+
+        .receipt-value {
+            font-weight: 700;
+        }
+
+        .notes {
+            margin-top: 20px;
+        }
+
+        .note {
+            display: flex;
+            justify-content: space-between;
+
+            padding: 10px 0;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 13px 22px;
+            border-radius: 10px;
+
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        @media (max-width: 600px) {
+
+            .success-container h1 {
+                font-size: 32px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include '_background.html' %}
+
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span>ATM</span> Finder
+        </div>
+
+        <nav>
+            <a href="/">Home</a>
+            <a href="/withdraw">Withdraw</a>
+            <a href="/admin">Admin</a>
+            <a href="/history">History</a>
+        </nav>
+
+    </header>
+
+
+    <main class="success-container">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1>Transaction Successful</h1>
+
+        <p>
+            Your cash withdrawal has been processed successfully.
+        </p>
+
+
+        <div class="receipt">
+
+            <div class="receipt-row">
+
+                <span class="receipt-label">
+                    Amount Dispensed
+                </span>
+
+                <span class="receipt-value">
+                    ₹{{ amount }}
+                </span>
+
+            </div>
+
+
+            <div class="receipt-row">
+
+                <span class="receipt-label">
+                    Total Notes
+                </span>
+
+                <span class="receipt-value">
+                    {{ combination.values()|sum }}
+                </span>
+
+            </div>
+
+
+            <div class="notes">
+
+                <strong>Dispensed Notes</strong>
+
+                {% for denomination, quantity in combination.items() %}
+
+                {% if quantity > 0 %}
+
+                <div class="note">
+
+                    <span>
+                        ₹{{ denomination }} note
+                    </span>
+
+                    <span>
+                        × {{ quantity }}
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a href="/withdraw" class="btn btn-primary">
+                New Withdrawal
+            </a>
+
+            <a href="/" class="btn btn-secondary">
+                Back to Home
+            </a>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
